@@ -1,4 +1,5 @@
 import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 
 const KEY = 'toyDB'
@@ -11,10 +12,15 @@ export const toyService = {
   getEmptyToy,
 }
 _createToys()
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : '//localhost:5173/api/'
+
 
 function query(filterBy = { txt: '', status: '', pageIdx: 0 }) {
   // server  
-  // return axios.get(API, { params: filterBy }).then(res => res.data)
+  // return httpService.get(BASE_URL).then(res => res.data)
+
 
   // loacl
   return storageService.query(KEY).then(toys => {
@@ -25,10 +31,8 @@ function query(filterBy = { txt: '', status: '', pageIdx: 0 }) {
 
 function getById(id) {
   // server  
-  // return axios
-  //   .get(API + id)
-  //   .then(res => res.data)
-  //   .catch(err => console.log(err))
+    // return httpService.get(BASE_URL, id).then(res => res.data)
+
 
   // loacl
   return storageService.get(KEY, id)
@@ -36,7 +40,7 @@ function getById(id) {
 
 function remove(id) {
   // server  
-  // return axios.delete(API + id).then(res => res.data)
+    // return httpService.delete(BASE_URL, id).then(res => res.data)
 
   // loacl
   return storageService.remove(KEY, id)
@@ -44,9 +48,8 @@ function remove(id) {
 
 function save(toy) {
   // server  
-  // if (todo._id) return axios.put(API + todo._id, todo).then(res => res.data)
-
-  // return axios.post(API, todo).then(res => res.data)
+  // if (toy._id) return httpService.put(BASE_URL, toy).then(res => res.data)
+  // else return httpService.post(BASE_URL, toy).then(res => res.data)
 
   // loacl
   const savedTodo = toy._id

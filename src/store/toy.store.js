@@ -5,9 +5,8 @@ export const toyStore = {
     toys: null,
     filterBy: {
       txt: '',
-      status: '',
-      pageIdx: 0,
-      pageSize: 5,
+      maxPrice: null,
+      inStock: null,
     },
     sortBy: {
       by: '',
@@ -18,19 +17,19 @@ export const toyStore = {
     toysToDisplay({ filterBy, toys }) {
       if (!toys) return null
 
-      // const { status, txt, pageIdx, pageSize } = filterBy
+      console.log("filterBy: ", filterBy);
+      const { maxPrice, txt, inStock } = filterBy
       let filteredToys = toys
 
-      // const regex = new RegExp(txt, 'i')
-      // filteredTodos = filteredTodos.filter(todo => regex.test(todo.txt))
+      const regex = new RegExp(txt, 'i')
+      filteredToys = filteredToys.filter(toy => regex.test(toy.name))
 
-      // if (status) {
-      //   filteredTodos = filteredTodos.filter(
-      //     todo =>
-      //       (todo.isDone && status === 'done') ||
-      //       (!todo.isDone && status === 'active')
-      //   )
-      // }
+      if (maxPrice) {
+        filteredToys = filteredToys.filter(toy => toy.price < maxPrice)
+      }
+      if (inStock) {
+        filteredToys = filteredToys.filter(toy => toy.inStock)
+      }
 
       // const startIdx = pageIdx * pageSize
       // filteredTodos = filteredTodos.slice(startIdx, startIdx + pageSize)
@@ -56,9 +55,9 @@ export const toyStore = {
       const idx = state.toys.findIndex(toy => toy._id === toyId)
       state.toys.splice(idx, 1)
     },
-    // setFilterBy(state, { filterBy }) {
-    //   state.filterBy = filterBy
-    // },
+    setFilterBy(state, { filterBy }) {
+      state.filterBy = filterBy
+    },
   },
   actions: {
     loadToys(context) {

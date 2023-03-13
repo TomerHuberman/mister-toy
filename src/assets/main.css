@@ -1,5 +1,10 @@
+/* basic */
 @import './basic/base.css';
 @import './basic/button.css';
 @import './basic/helpers.css';
+@import './basic/vars.css';
 
+
+/* cmps */
 @import './cmps/user-msg.css';
+@import './cmps/ToyList.css';

@@ -14,8 +14,9 @@ export default {
 
 <template>
   <li class="toy-preview">
-    <h1>{{ toy.name }}</h1>
-    <h3>{{ toy.price }}</h3>
+    <h1>Name: {{ toy.name }}</h1>
+    <h3>Price: {{ toy.price }}</h3>
+    <h3>Available: {{ (toy.inStock) ? 'Yes' : 'No' }}</h3>
 
     <div class="tools flex">
       <button @click="$emit('remove')" class="btn">
