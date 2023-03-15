@@ -8,15 +8,6 @@ export default {
   name: 'toyIndex',
   data() {
     return {
-      filterBy: {
-        txt: '',
-        maxPrice: null,
-        inStock: null,
-      },
-      sortBy: {
-        by: '',
-        desc: 1,
-      },
     }
   },
   created() {
@@ -32,17 +23,8 @@ export default {
           showErrorMsg('Cannot remove Toy')
         })
     },
-    setFilterByTxt(txt) {
-      this.filterBy.txt = txt
-      this.filterTodos()
-    },
-    setFilterByPrice(price) {
-      this.filterBy.maxPrice = price
-      this.filterTodos()
-    },
-    setFilterByInStock(inStock) {
-      this.filterBy.inStock = inStock
-      this.filterTodos()
+    setFilter(filterBy) {
+      this.$store.dispatch({ type: 'loadToys', filterBy })
     },
     filterTodos() {
       const filterBy = { ...this.filterBy }
@@ -70,17 +52,14 @@ export default {
 
 
 <template>
-  <div class="toy-index">
-    <h1>This is ToyIndex</h1>
-    <ToyFilter 
-    @filteredTxt="setFilterByTxt"
-    @filteredPrice="setFilterByPrice"
-    @filteredInStock="setFilterByInStock"
-     />
-    <RouterLink class="btn btn-add" to="/toy/edit">Add a toy</RouterLink>
+  <section class="toy-index">
+    <header>
+      <h1>Toy Store</h1>
+      <ToyFilter @setFilter="setFilter" />
+      <RouterLink class="btn btn-add" to="/toy/edit">Add a toy</RouterLink>
+    </header>
     <ToyList :toys="toys" @remove="removeToy" />
-    <!-- <pre>{{ toys }}</pre> -->
-  </div>
+  </section>
 </template>
 
 

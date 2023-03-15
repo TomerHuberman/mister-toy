@@ -1,31 +1,36 @@
 <script>
 
+
 export default {
   data() {
     return {
       filterBy: {
-        txt: '',
+        name: '',
         maxPrice: null,
-        inStock: null,
-        labels: []
+        inStock: false,
+        labels: [],
+        sortBy: {
+          by: '',
+          desc: 1,
+        }
       },
-      sortBy: {
-        by: '',
-        desc: 1,
-      },
+      options: []
     }
   },
+  created() {
+    this.options = this.labelsOps
+  },
   methods: {
-    setFilterTxt() {
-      this.$emit('filteredTxt', this.filterBy.txt)
-    },
-    setFilterPrice() {
-      this.$emit('filteredPrice', this.filterBy.maxPrice)
-    },
-    setFilterInStock() {
-      this.$emit('filteredInStock', this.filterBy.inStock)
+    setFilter() {
+      this.$emit('setFilter', { ...this.filterBy })
     },
   },
+  computed: {
+    labelsOps() {
+      return this.$store.getters.labelsOps
+    }
+  },
+
 }
 </script>
 
@@ -33,12 +38,20 @@ export default {
 
 <template>
   <section class="toy-filter flex space-between">
-    <input class="input" v-model="filterBy.txt" @input="setFilterTxt" type="text" placeholder="Search toy..">
-    <span>{{ filterBy.maxPrice }}
-    <input step="11" min="0" max="1001" :title="filterBy.maxPrice" v-model="filterBy.maxPrice" @change="setFilterPrice" type="range">
-    <label for="isInStock">Only in stock</label>
-    <input id="isInStock" v-model="filterBy.inStock" @change="setFilterInStock" type="checkbox">
+    <input class="input" v-model="filterBy.name" @input="setFilter" type="text" placeholder="Search toy..">
+    <span>Max price: {{ filterBy.maxPrice }}
+      <input min="0" max="300" :title="filterBy.maxPrice" v-model="filterBy.maxPrice" @input="setFilter"
+        type="range">
     </span>
+    <div class="m-4">
+      <p>filter by Tags</p>
+      <el-select @change="setFilter" v-model="filterBy.labels" multiple collapse-tags placeholder="Select" style="width: 240px">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+    <label>Only in stock
+      <input v-model="filterBy.inStock" @change="setFilter" type="checkbox">
+    </label>
   </section>
 </template>
 

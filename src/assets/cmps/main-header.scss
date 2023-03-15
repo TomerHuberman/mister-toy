@@ -1,0 +1,23 @@
+.main-header {
+    height: var(--appHeader);
+    background-color: var(--clr-1);
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    align-items: center;
+
+    & nav {
+        justify-self: end;
+        
+        & .link-active {
+            color: black;
+            font-weight: 700;
+            text-shadow: 0 0 20px #ffffffcf;
+        }
+        
+        &>* {
+            padding-inline-end: 1.4em;
+            color: var(--ff);
+            font-size: 1.1em;
+        }
+    }
+}

@@ -11,19 +11,20 @@
   align-items: center;
 
   animation: moveUpFadeIn 0.3s ease-in, moveDownFadeOut 0.3s ease-out 1.8s;
+  
+  & i {
+    font-size: 2rem;
+    margin-inline-end: 1.5rem;
+  }
+  
+  &.success {
+    border-color: #40c057;
+    color: #40c057;
+  }
+  
+  &.error {
+    border-color: #e03131;
+    color: #e03131;
+  }
 }
 
-.user-msg i {
-  font-size: 2rem;
-  margin-inline-end: 1.5rem;
-}
-
-.success {
-  border-color: #40c057;
-  color: #40c057;
-}
-
-.error {
-  border-color: #e03131;
-  color: #e03131;
-}

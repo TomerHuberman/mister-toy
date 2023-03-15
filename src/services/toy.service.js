@@ -3,7 +3,7 @@ import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 
 const KEY = 'toyDB'
-// const API = 'api/toy/'
+const API = 'toy/'
 export const toyService = {
   query,
   getById,
@@ -12,51 +12,47 @@ export const toyService = {
   getEmptyToy,
 }
 _createToys()
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/'
-    : '//localhost:5173/api/'
 
-
-function query(filterBy = { txt: '', status: '', pageIdx: 0 }) {
+function query(filterBy) {
   // server  
-  // return httpService.get(BASE_URL).then(res => res.data)
+  return httpService.get(API, filterBy)
 
 
   // loacl
-  return storageService.query(KEY).then(toys => {
+  // return storageService.query(KEY).then(toys => {
     // filter here
-    return toys
-  })
+    // return toys
+  // })
 }
 
-function getById(id) {
+function getById(toyId) {
   // server  
-    // return httpService.get(BASE_URL, id).then(res => res.data)
+    return httpService.get(API + toyId)
 
 
   // loacl
-  return storageService.get(KEY, id)
+  // return storageService.get(KEY, id)
 }
 
-function remove(id) {
+function remove(toyId) {
   // server  
-    // return httpService.delete(BASE_URL, id).then(res => res.data)
+    return httpService.delete(API + toyId)
 
   // loacl
-  return storageService.remove(KEY, id)
+  // return storageService.remove(KEY, id)
 }
 
 function save(toy) {
   // server  
-  // if (toy._id) return httpService.put(BASE_URL, toy).then(res => res.data)
-  // else return httpService.post(BASE_URL, toy).then(res => res.data)
+  if (toy._id) return httpService.put(API + toy._id, toy)
+  else return httpService.post(API, toy)
 
   // loacl
-  const savedTodo = toy._id
-    ? storageService.put(KEY, toy)
-    : storageService.post(KEY, toy)
+  // const savedTodo = toy._id
+  //   ? storageService.put(KEY, toy)
+  //   : storageService.post(KEY, toy)
 
-  return savedTodo
+  // return savedTodo
 }
 
 function getEmptyToy() {

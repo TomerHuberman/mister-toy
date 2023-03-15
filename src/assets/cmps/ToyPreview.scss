@@ -1,0 +1,20 @@
+.toy-preview {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr 1.2rem;
+    padding: 10px;
+    background-color: var(--clrBase);
+    list-style-type: none;
+    height: 300px;
+    align-items: end;
+
+    & .tools {
+        justify-content: space-between;
+    }
+
+
+    & h1 {
+        align-self: start;
+        font-size: 1.3em;
+    }
+}

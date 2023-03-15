@@ -2,39 +2,25 @@ import { toyService } from '../services/toy.service.js'
 
 export const toyStore = {
   state: {
-    toys: null,
-    filterBy: {
-      txt: '',
-      maxPrice: null,
-      inStock: null,
-    },
-    sortBy: {
-      by: '',
-      desc: 1,
-    },
+    toys: [],
+    labels: [
+      'On wheels', 'Box game', 'Art',
+      'Baby', 'Doll', 'Puzzle',
+      'Outdoor', 'Battery Powered'
+    ]
   },
   getters: {
-    toysToDisplay({ filterBy, toys }) {
+    toysToDisplay({ toys }) {
       if (!toys) return null
-
-      console.log("filterBy: ", filterBy);
-      const { maxPrice, txt, inStock } = filterBy
-      let filteredToys = toys
-
-      const regex = new RegExp(txt, 'i')
-      filteredToys = filteredToys.filter(toy => regex.test(toy.name))
-
-      if (maxPrice) {
-        filteredToys = filteredToys.filter(toy => toy.price < maxPrice)
-      }
-      if (inStock) {
-        filteredToys = filteredToys.filter(toy => toy.inStock)
-      }
-
-      // const startIdx = pageIdx * pageSize
-      // filteredTodos = filteredTodos.slice(startIdx, startIdx + pageSize)
-
-      return filteredToys
+      return toys
+    },
+    labels({ labels }) {
+      if (!labels) return null
+      return labels
+    },
+    labelsOps({ labels }) {
+      if (!labels) return null
+      return labels.map(label => { return { label, value: label } })
     },
   },
   mutations: {
@@ -55,16 +41,13 @@ export const toyStore = {
       const idx = state.toys.findIndex(toy => toy._id === toyId)
       state.toys.splice(idx, 1)
     },
-    setFilterBy(state, { filterBy }) {
-      state.filterBy = filterBy
-    },
   },
   actions: {
-    loadToys(context) {
+    loadToys({ commit }, { filterBy }) {
       toyService
-        .query()
+        .query(filterBy)
         .then(toys => {
-          context.commit({ type: 'setToys', toys })
+          commit({ type: 'setToys', toys })
         })
         .catch(err => {
           throw err
@@ -83,19 +66,6 @@ export const toyStore = {
         commit(payload) // {type: 'removeTodo', todoId}
       })
     },
-    //   getById({ commit }, { todoId }) {
-    //     return todoService.getById(todoId).then(todo => {
-    //       commit({ type: 'setCurrTodo', todo })
-    //       return todo
-    //     })
-    //   },
-    // },
-    // loadTodos({ commit }, { filterBy }) {
-    //   todoService
-    //     .query(filterBy)
-    //     .then(todos => commit({ type: 'setTodos', todos }))
-    //     .catch(err => {
-    //       throw err
-    //     })
+
   },
 }

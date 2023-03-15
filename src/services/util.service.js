@@ -14,8 +14,12 @@ function getRandomInt(min, max) {
   max = Math.floor(max)
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+function getRandomColor() {
+  return '#' + (Math.random().toString(16) + "000000").substring(2,8)
+}
 
 export const utilService = {
   makeId,
   getRandomInt,
+  getRandomColor
 }

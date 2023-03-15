@@ -16,11 +16,11 @@ export default {
   <li class="toy-preview">
     <h1>Name: {{ toy.name }}</h1>
     <h3>Price: {{ toy.price }}</h3>
-    <h3>Available: {{ (toy.inStock) ? 'Yes' : 'No' }}</h3>
+    <!-- <h3>Available: {{ (toy.inStock) ? 'Yes' : 'No' }}</h3> -->
 
-    <div class="tools flex">
+    <div class="tools flex space-between">
       <button @click="$emit('remove')" class="btn">
-        <span>x</span>
+        <span>Remove</span>
       </button>
       <RouterLink
         :to="'/toy/edit/' + toy._id"

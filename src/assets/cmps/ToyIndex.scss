@@ -1,0 +1,18 @@
+.toy-index {
+    display: grid;
+    grid-template-rows: 20vh 1fr;
+    max-width: 980px;
+    margin: auto;
+
+    & header {
+        display: grid;
+        align-content: end;
+        margin-bottom: 1rem;
+
+        & .btn-add {
+            border: 0;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.254);
+            width: fit-content;
+        }
+    }
+}

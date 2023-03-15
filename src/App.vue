@@ -17,13 +17,13 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header class="main-header">
+    <div class="logo"></div>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/toy">index</RouterLink>
-      <RouterLink to="/toy/edit">Edit</RouterLink>
-      <RouterLink to="/toy/details/djalsk">Details</RouterLink>
+      <RouterLink activeClass="link-active" to="/">Home</RouterLink>
+      <RouterLink activeClass="link-active" to="/toy">Toy store</RouterLink>
+      <RouterLink activeClass="link-active" to="/dash">Dashboard</RouterLink>
+      <RouterLink activeClass="link-active" to="/about">About</RouterLink>
     </nav>
   </header>
   <UserMessage />

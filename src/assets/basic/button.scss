@@ -15,9 +15,9 @@
   padding: 0 0.5rem;
   text-align: center;
   font-weight: 400;
-}
 
-.btn:hover {
-  background-color: #f7fafa51;
-  border-color: #d5d9d9;
+  &:hover {
+    background-color: #f7fafa51;
+    border-color: #d5d9d9;
+  }
 }
