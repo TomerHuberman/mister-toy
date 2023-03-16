@@ -15,7 +15,6 @@ export default {
         }
     },
     created() {
-
     },
     methods: {
         getToysByLabel(label) {

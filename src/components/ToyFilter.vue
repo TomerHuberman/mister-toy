@@ -40,7 +40,7 @@ export default {
   <section class="toy-filter flex space-between">
     <input class="input" v-model="filterBy.name" @input="setFilter" type="text" placeholder="Search toy..">
     <span>Max price: {{ filterBy.maxPrice }}
-      <input min="0" max="300" :title="filterBy.maxPrice" v-model="filterBy.maxPrice" @input="setFilter"
+      <input min="0" max="300" :title="filterBy.maxPrice" v-model="filterBy.maxPrice" @change="setFilter"
         type="range">
     </span>
     <div class="m-4">

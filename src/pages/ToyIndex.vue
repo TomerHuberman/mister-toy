@@ -13,39 +13,31 @@ export default {
   created() {
   },
   methods: {
-    removeToy(toyId) {
-      this.$store
-        .dispatch({ type: 'removeToy', toyId })
-        .then(() => {
-          showSuccessMsg('Toy removed')
-        })
-        .catch(err => {
-          showErrorMsg('Cannot remove Toy')
-        })
-    },
-    setFilter(filterBy) {
-      this.$store.dispatch({ type: 'loadToys', filterBy })
-    },
-    filterTodos() {
-      const filterBy = { ...this.filterBy }
-      this.$store.commit({ type: 'setFilterBy', filterBy })
-
-      // If filtering in backend/service
-      // this.isLoading = true
-      // this.$store
-      //   .dispatch({ type: 'loadTodos', filterBy })
-      //   .then(() => (this.isLoading = false))
-    },
+    async removeToy(toyId) {
+      try {
+        await this.$store.dispatch({ type: 'removeToy', toyId })
+        showSuccessMsg('Toy removed')
+      } catch (err) {
+        showErrorMsg('Cannot remove Toy')
+      }
   },
-  computed: {
-    toys() {
-      return this.$store.getters.toysToDisplay
-    },
+  setFilter(filterBy) {
+    this.$store.dispatch({ type: 'loadToys', filterBy })
   },
-  components: {
-    ToyList,
+  filterTodos() {
+    const filterBy = { ...this.filterBy }
+    this.$store.commit({ type: 'setFilterBy', filterBy })
+  },
+},
+computed: {
+  toys() {
+    return this.$store.getters.toysToDisplay
+  },
+},
+components: {
+  ToyList,
     ToyFilter
-  },
+},
 }
 </script>
 

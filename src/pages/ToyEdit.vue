@@ -11,10 +11,15 @@ export default {
   },
   watch: {
     '$route.params': {
-      handler() {
+      async handler() {
         const { toyId } = this.$route.params
         if (toyId) {
-          toyService.getById(toyId).then(toy => (this.toy = toy))
+          try {
+            const toy = await toyService.getById(toyId)
+            this.toy = toy
+          } catch (err) {
+            console.log('failed to get toy')
+          }
         } else {
           this.toy = toyService.getEmptyToy()
         }
@@ -23,16 +28,14 @@ export default {
     },
   },
   methods: {
-    saveToy() {
-      this.$store
-        .dispatch({ type: 'saveToy', toy: this.toy })
-        .then(toy => {
-          showSuccessMsg('Added/Updated succssefully')
-          this.$router.push('/toy')
-        })
-        .catch(err => {
-          showErrorMsg("Couldn't add/update toy")
-        })
+    async saveToy() {
+      try {
+        const toy = await this.$store.dispatch({ type: 'saveToy', toy: this.toy })
+        showSuccessMsg(`Added/Updated ${toy.name} succssefully`)
+        this.$router.push('/toy')
+      } catch (err) {
+        showErrorMsg("Couldn't add/update toy")
+      }
     },
   },
   computed: {

@@ -11,7 +11,7 @@ export const toyService = {
   save,
   getEmptyToy,
 }
-_createToys()
+// _createToys()
 
 function query(filterBy) {
   // server  

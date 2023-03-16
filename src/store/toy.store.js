@@ -43,29 +43,31 @@ export const toyStore = {
     },
   },
   actions: {
-    loadToys({ commit }, { filterBy }) {
-      toyService
-        .query(filterBy)
-        .then(toys => {
-          commit({ type: 'setToys', toys })
-        })
-        .catch(err => {
-          throw err
-        })
+    async loadToys({ commit }, { filterBy }) {
+      try {
+        const toys = await toyService.query(filterBy)
+        commit({ type: 'setToys', toys })
+      } catch (err) {
+        throw new Error('failed to load toys')
+      }
     },
-    saveToy({ commit }, { toy }) {
+    async saveToy({ commit }, { toy }) {
       const actionType = toy._id ? 'updateToy' : 'addToy'
-      return toyService.save(toy).then(savedToy => {
+      try {
+        const savedToy = await toyService.save(toy)
         commit({ type: actionType, toy: savedToy })
         return savedToy
-      })
+      } catch (err) {
+        throw new Error('failed to save/update toy')
+      }
     },
-    removeToy({ commit }, payload) {
-
-      return toyService.remove(payload.toyId).then(() => {
-        commit(payload) // {type: 'removeTodo', todoId}
-      })
+    async removeToy({ commit }, payload) {
+      try {
+        await toyService.remove(payload.toyId)
+        return commit(payload)
+      } catch (err) {
+        throw new Error('failed to remove toy')
+      }
     },
-
   },
 }
